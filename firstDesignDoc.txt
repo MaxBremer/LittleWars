@@ -1,0 +1,18 @@
+Little Wars Basic design
+
+Use a resource (temp name CONTROL) to place units, equip them, and give them commands.
+Diff units have diff traits, attack patterns, costs etc.
+COMMANDS are unique mechanic: Can tell a unit specifically how to attack/act, at cost of resource.
+Note: balancing will be difficult.
+
+A level plays out as follows: 
+1. Player learns enemy unit layout, number of available slots, maybe some other things.
+TBD: DOES PLAYER LEARN ENEMY LAYOUT? MAY WANT TO ADD MYSTERY, RANDOMIZED LAYOUT EACH TIME, SO PLAYER HAS TO MAKE ADAPTABLE TEAM.
+PLAYER LEARNS SOME INFO BUT NOT ALL???? PROBS BEST APPROACH.
+2. First round is biggest, player decides which units to place. (UNITS ONLY PLACEABLE FIRST ROUND?)
+TBD: ROUNDS END AFTER EACH UNIT ACTS? AFTER A UNIT DIES? SOME OTHER CONDITION?
+3. After each round, CONTROL can be spent to add commands, change commands, change equipment, maybe heal units.
+4. Level ends when one side has no units left. If opponents side, player moves on to next level.
+
+
+TBD: UNITS ARE SHAPES?? OBJECTS?? Basic meshes at first, improve later.

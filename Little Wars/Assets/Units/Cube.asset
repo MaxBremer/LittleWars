@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Dan
   desc: Advanced
+  difficultyFactor: 1
   health: 2
   attack: 3
   defense: 1
-  buyCost: 0
+  buyCost: 1
   deployCost: 0
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   unitMat: {fileID: 2100000, guid: 49d7e0251ba5cea46bde04dd1f333ac1, type: 2}

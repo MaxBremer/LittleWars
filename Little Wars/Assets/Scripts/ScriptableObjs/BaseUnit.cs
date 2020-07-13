@@ -8,6 +8,8 @@ public class BaseUnit : ScriptableObject
     public string unitName;
     public string desc;
 
+    public float difficultyFactor;
+
     public int health;
     public int attack;
     public int defense;

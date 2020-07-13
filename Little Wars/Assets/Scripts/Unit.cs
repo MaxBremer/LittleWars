@@ -112,7 +112,7 @@ public class Unit : MonoBehaviour
         if (gameObject.GetComponent<MeshRenderer>() == null)
         {
             mr = gameObject.AddComponent<MeshRenderer>();
-            mr.stitchLightmapSeams = true;
+            //mr.stitchLightmapSeams = true;
         }
         if (gameObject.GetComponent<MeshCollider>() == null)
         {
@@ -182,7 +182,22 @@ public class Unit : MonoBehaviour
         curBuyCost = other.curBuyCost;
         curDeployCost = other.curDeployCost;
 
-        myData = other.myData;
+        //myData = other.myData;
+        switch (unitType.myDataType)
+        {
+            case dataType.basic:
+                myData = new Metadata();
+                break;
+            case dataType.swipe:
+                myData = new bobData();
+                break;
+            case dataType.poison:
+                myData = new poisonData();
+                break;
+            default:
+                Debug.Log("ERROR: metadata type not assigned or unrecognized");
+                break;
+        }
 
         initComponents();
 

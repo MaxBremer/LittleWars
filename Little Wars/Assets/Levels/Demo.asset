@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50a1e38de14ea9b4b8fe4065097f0571, type: 3}
+  m_Name: Demo
+  m_EditorClassIdentifier: 
+  levelNum: 0
+  levelName: demo
+  levelDesc: 
+  startingCtrl: 20
+  friendlySlotNum: 5
+  enemySlotNum: 5
+  enemyUnits:
+  - {fileID: 11400000, guid: 8d711a06064739047a7abffdf1ee3c69, type: 2}
+  - {fileID: 11400000, guid: 1c398928eb0e548458a4aed27e7ef17e, type: 2}
+  - {fileID: 11400000, guid: 59ff26b0119624649a5fd1deb3854652, type: 2}
+  - {fileID: 11400000, guid: 27c90a7cb04c3a6428cb84f7b24c5350, type: 2}
+  - {fileID: 11400000, guid: fa871f5e940c479488d2867af70b8f71, type: 2}
+  marketUnits:
+  - {fileID: 11400000, guid: 27c90a7cb04c3a6428cb84f7b24c5350, type: 2}
+  - {fileID: 11400000, guid: 8d711a06064739047a7abffdf1ee3c69, type: 2}
+  - {fileID: 11400000, guid: 1c398928eb0e548458a4aed27e7ef17e, type: 2}
+  - {fileID: 11400000, guid: 59ff26b0119624649a5fd1deb3854652, type: 2}
+  - {fileID: 11400000, guid: fa871f5e940c479488d2867af70b8f71, type: 2}
+  marketChances: 0100000001000000010000000100000001000000
+  numMarketSlots: 10

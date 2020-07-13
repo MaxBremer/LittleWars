@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: bob
   desc: he is bob
+  difficultyFactor: 4.5
   health: 5
   attack: 3
   defense: 0

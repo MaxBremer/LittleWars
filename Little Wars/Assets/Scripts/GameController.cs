@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -81,6 +82,7 @@ public class GameController : MonoBehaviour
     public GameObject spawnButton;
     GameObject unitSelectPanel;
     public MarketController mk;
+    public LevelGenerator lg;
     //public ActiveUIController uic;
 
     public int backupCtrlCount;
@@ -89,10 +91,17 @@ public class GameController : MonoBehaviour
     public BaseLevel[] levels;
     public int levelCount;
 
-    public GenLevel[] infLevels;
-    
+    public GenLevel curLevel;
 
-    gStats st;
+    float startingDifficulty;
+    float curDifficulty;
+    const float diffIncr = 5f;
+
+    bool firstTimeSetup = true;
+
+    public gStats st;
+
+    const int startingCtrlBoost = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -108,31 +117,74 @@ public class GameController : MonoBehaviour
         curPhase = GamePhase.Prep;
         selected = null;
         typeToAssign = null;
+        //material control for combatants
         sub1orig = null;
         sub2orig = null;
 
         ih = GameObject.Find("InventoryController").GetComponent<InventoryHandler>();
         
         mk = GameObject.Find("MarketController").GetComponent<MarketController>();
+
+        lg = gameObject.GetComponent<LevelGenerator>();
+
         levelCount = 0;
         //uic = GameObject.Find("CTRLPanel").GetComponent<ActiveUIController>();
         //mk.initMarketPhase(testLevel);
 
         //DontDestroyOnLoad(gameObject);
-        loadLevel(levels[levelCount], false);
+
+        startingDifficulty = 10f;
+        curDifficulty = startingDifficulty;
+        if (!st.isInfinite)
+        {
+            loadLevel(levels[levelCount], false);
+        }
+        else
+        {
+            ctrl += startingCtrlBoost;
+            //GameObject.Find("TutorialPanel").SetActive(false);
+            //FOR SOME REASON, IF I JUST DISABLE THE TUTORIAL PANEL THEN UNITSELECTPANEL MOVES TWICE AS MUCH
+            //WHEN EXPANDING.
+            //TODO: FIGURE OUT WHY THE FUCK AND REMOVE THIS SHITTY ASS SOLUTION BELOW.
+            Color setTo = new Color(0, 0, 0, 0);
+            GameObject target = GameObject.Find("TutorialPanel");
+            target.GetComponent<Image>().color = setTo;
+            target.transform.GetChild(0).GetComponent<Text>().color = setTo;
+            target.transform.GetChild(1).GetComponent<Image>().color = setTo;
+            target.transform.GetChild(1).GetChild(0).GetComponent<Text>().color = setTo;
+            target.transform.GetChild(2).GetComponent<Image>().color = setTo;
+            target.transform.GetChild(2).GetChild(0).GetComponent<Text>().color = setTo;
+        }
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (st.isInfinite && firstTimeSetup)
+        {
+            firstTimeSetup = false;
+            curLevel = lg.generateLevel(curDifficulty);
+            loadGenLevel(curLevel, false);
+        }
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Q))
+        {
+            Destroy(st.gameObject);
+            SceneManager.LoadScene(0);
+        }
         switch (curPhase)
         {
             case GamePhase.Prep:
                 if (Input.GetKeyDown(marketKey))
                 {
-                    mk.initMarketPhase(levels[levelCount]);
+                    if (!st.isInfinite)
+                    {
+                        mk.initMarketPhase(levels[levelCount]);
+                    }
+                    else
+                    {
+                        mk.initMarketPhase(null);
+                    }
                 }
                 if (Mathf.CeilToInt(Camera.main.transform.eulerAngles.y) != 0)
                 {
@@ -160,36 +212,67 @@ public class GameController : MonoBehaviour
                         {
                             if (friendlyUnitCount > 0 && enemyUnitCount > 0)
                             {
+                                //fight isn't over, initiate a new attack.
                                 chooseAttackers();
                             }
                             else
                             {
+                                //fight is over, determine who won/tie.
                                 if (friendlyUnitCount > 0)
                                 {
-                                    
+                                    //win condition.
+                                    //basic next-level stuff
                                     levelCount++;
-                                    if (levelCount == levels.Length)
+                                    mk.emptyStoredMarket();
+                                    if (!st.isInfinite)
                                     {
-                                        endScreen("You Win!");
+                                        //pre-set levels condition.
+                                        if (levelCount == levels.Length)
+                                        {
+                                            endScreen("You Win!");
+                                        }
+                                        else
+                                        {
+                                            curPhase = GamePhase.Transition;
+                                            clearLevel();
+                                            loadLevel(levels[levelCount], false);
+                                        }
                                     }
                                     else
                                     {
+                                        //infinite level generation condition.
+                                        curDifficulty += diffIncr;
                                         curPhase = GamePhase.Transition;
                                         clearLevel();
-                                        loadLevel(levels[levelCount], false);
+                                        curLevel = lg.generateLevel(curDifficulty);
+                                        loadGenLevel(curLevel, false);
                                     }
                                 }
                                 else if (enemyUnitCount > 0)
                                 {
-                                    endScreen("You Lose!");
+                                    //loseCondition
+                                    string printer = "Unfortunately, you died.";
+                                    if (st.isInfinite)
+                                    {
+                                        printer += "\n You beat: " + levelCount + " levels.";
+                                    }
+                                    endScreen(printer);
                                 }
                                 else
                                 {
+                                    //tie condition
                                     curPhase = GamePhase.Transition;
                                     clearLevel();
                                     ih.clearInv();
                                     ih.unitInventory.AddRange(ih.invBackup);
-                                    loadLevel(levels[levelCount], true);
+                                    if (!st.isInfinite)
+                                    {
+                                        loadLevel(levels[levelCount], true);
+                                    }
+                                    else
+                                    {
+                                        loadGenLevel(curLevel, true);
+                                    }
                                 }
                                 curPhase = GamePhase.Prep;
                                 timer = 0;
@@ -198,6 +281,7 @@ public class GameController : MonoBehaviour
                         }
                         else
                         {
+                            //Totally unimplemented fights that consist of a single pass through.
                             Debug.Log("One iteration attack");
                         }
                     }
@@ -305,7 +389,7 @@ public class GameController : MonoBehaviour
             Destroy(s.gameObject);
         }
         mk.resetMarket();
-        mk.clearStored();
+        //mk.clearStored();
         ih.clearButtons();
     }
 
@@ -316,6 +400,7 @@ public class GameController : MonoBehaviour
 
         unitSelectPanel = GameObject.Find("UnitSelectPanel");
 
+        //Slot instantiation
         Vector3 curSlotPos = countToPos[level.friendlySlotNum];// - new Vector3((countToOffset[level.friendlySlotNum]/2),0,0);
         float slotOffset = countToOffset[level.friendlySlotNum];
         for (int i = 0; i < level.friendlySlotNum ; i++)
@@ -368,12 +453,76 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void loadGenLevel(GenLevel level, bool refresh)
+    {
+        friendlyBoard = new Slot[level.friendlySlotNum];
+        enemyBoard = new Slot[level.enemySlotNum];
+
+        unitSelectPanel = GameObject.Find("UnitSelectPanel");
+
+        Vector3 curSlotPos = countToPos[level.friendlySlotNum];// - new Vector3((countToOffset[level.friendlySlotNum]/2),0,0);
+        float slotOffset = countToOffset[level.friendlySlotNum];
+        for (int i = 0; i < level.friendlySlotNum; i++)
+        {
+            GameObject tempSlotObj = Instantiate(friendSlot, curSlotPos, Quaternion.identity);
+            tempSlotObj.transform.Rotate(new Vector3(270, 0, 0));
+            friendlyBoard[i] = tempSlotObj.GetComponent<Slot>();
+            tempSlotObj.GetComponent<Slot>().slotIndex = i;
+            curSlotPos.x += slotOffset;
+        }
+        curSlotPos = countToPos[level.enemySlotNum] + new Vector3(0, .5f, 5);
+        slotOffset = countToOffset[level.enemySlotNum];
+        for (int i = 0; i < level.enemySlotNum; i++)
+        {
+            GameObject tempSlotObj = Instantiate(enemySlot, curSlotPos, Quaternion.identity);
+            tempSlotObj.transform.Rotate(new Vector3(270, 0, 0));
+            enemyBoard[i] = tempSlotObj.GetComponent<Slot>();
+            tempSlotObj.GetComponent<Slot>().slotIndex = i;
+            curSlotPos.x += slotOffset;
+        }
+
+        //spawn enemy units based on level
+        for (int i = 0; i < Mathf.Min(level.enemyUnits.Length, level.enemySlotNum); i++)
+        {
+            spawnUAtSlot(level.enemyUnits[i], enemyBoard[i]);
+            enemyUnitCount++;
+            enemyBoard[i].containing.GetComponent<Unit>().isFriendly = false;
+        }
+        //initialize spawn buttons for player
+        Vector3 buttonTransform = GameObject.Find("ButtonPlacement").transform.position;
+        ih.initButtons(buttonTransform, unitSelectPanel.transform, spawnButton);
+
+
+        if (!refresh)
+        {
+            ctrl += level.startingCtrl;
+            backupCtrlCount = ctrl;
+        }
+        else
+        {
+            ctrl = backupCtrlCount;
+        }
+
+        curPhase = GamePhase.Prep;
+    }
+
     public void spawnAtSlot(BaseUnit unit, Slot sl)
     {
         if (unit != null)
         {
             GameObject instUnit = Instantiate(basicUnit, sl.pos.position, Quaternion.identity);
             instUnit.GetComponent<Unit>().assignType(unit);
+            sl.containing = instUnit;
+            instUnit.GetComponent<Unit>().mySlot = sl;
+        }
+    }
+
+    public void spawnUAtSlot(Unit unit, Slot sl)
+    {
+        if (unit != null)
+        {
+            GameObject instUnit = Instantiate(basicUnit, sl.pos.position, Quaternion.identity);
+            instUnit.GetComponent<Unit>().copyIn(unit);
             sl.containing = instUnit;
             instUnit.GetComponent<Unit>().mySlot = sl;
         }
@@ -439,6 +588,14 @@ public class GameController : MonoBehaviour
         {
             if(item.containing != null)
             {
+                if (item.containing.GetComponent<Unit>() == null)
+                {
+                    Debug.Log("no unit available somehow");
+                }
+                else if (item.containing.GetComponent<Unit>().myData == null)
+                {
+                    Debug.Log("metadata wasn't set somehow");
+                }
                 item.containing.GetComponent<Unit>().myData.passInData(friendlyBoard, enemyBoard, item.containing.GetComponent<Unit>(), item.slotIndex);
             }
         }

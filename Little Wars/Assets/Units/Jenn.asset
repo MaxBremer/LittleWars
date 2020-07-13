@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Jenn
   desc: mom
+  difficultyFactor: 3
   health: 1
   attack: 4
   defense: 3

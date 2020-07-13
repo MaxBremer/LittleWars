@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Sai
   desc: A simple unit.
+  difficultyFactor: 6
   health: 6
   attack: 1
   defense: 0
-  buyCost: 1
+  buyCost: 6
   deployCost: 0
   mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   unitMat: {fileID: 2100000, guid: 49d7e0251ba5cea46bde04dd1f333ac1, type: 2}

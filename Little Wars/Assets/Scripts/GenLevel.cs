@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class GenLevel
 {
-    public Unit[] enemiesToFace;
-    public int numEnemySlots;
-    public int numFriendlySlots;
+    public Unit[] enemyUnits;
+    public int enemySlotNum;
+    public int friendlySlotNum;
 
     public float difficulty;
 
-    public Unit[] availableInMarket;
+    public BaseUnit[] availableInMarket;
     public int[] marketUnitChances;
     public int numShopSlots;
 
-    public int ctrlIncrease;
+    public int startingCtrl;
 
     public GenLevel() { }
 

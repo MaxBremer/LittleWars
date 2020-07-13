@@ -16,3 +16,10 @@ TBD: ROUNDS END AFTER EACH UNIT ACTS? AFTER A UNIT DIES? SOME OTHER CONDITION?
 
 
 TBD: UNITS ARE SHAPES?? OBJECTS?? Basic meshes at first, improve later.
+
+Game State enum:
+	FirstRoundPrep
+	Fighting
+	Between-RoundPrep
+
+Game Controller holds whole board setup, figures out fight.

@@ -1,0 +1,63 @@
+OUT OF CONTROL
+
+Meta-layer out of control:
+	Something player usually has control over
+		Player abilities are somehow out of control
+	Something developer usually has control over
+		Procedural generation, level design out of control.
+		art
+		code
+		mechanics
+		systems
+		values
+	Game loses control of some system
+	
+	Who you start as is out of your control, but who you become is up to you.
+		Who you start as: Resources, abilities, mechanics, allies,
+		Pick up more/change them as you go.
+	Platformer? Strategy? Puzzle? Slow or fast pace?  
+
+Literal layer out of control:
+	Rampaging creature of some variety.
+	Something spreading out of control, e.g. 
+		a virus
+		Plant life, something calmer
+		Fire, pretty much of any variety
+		flooding
+	Player losing control of something literal
+		A hose for example
+		their pet dog
+		Your people, you're a king or commander of some kind
+		Umbrella
+		bullfight
+	Apocalypse or disaster
+	Rebellion
+	Rumors spreading out of control
+	(Roguelike, laying wires to power/control tower defense system)
+	Superhero out of control of his powers.
+
+
+	Letting go of control
+		A god creates life, tries to direct in right direction.
+
+	SUPER LITERAL: Escape a prison named Control.
+		       Running out of a resource called Control.
+			"Out", of Control
+
+	React to Aliens: What they do is out of your control, how you act isn't.
+
+	Disaster management
+	Assemble a team, but what they do is up to you. TFT, Battlegrounds, etc.
+		Deploy agents, give basic instructions, but their actual "field" action is not in your control.
+		Auto battler.
+
+	MAIN IDEA I THINK
+	Singleplayer autobattler, see enemy layouts before each battle, level consists of multiple battles,
+	give simple instructions to units e.g. attack strongest, attack various, attack weakest,  etc.
+		Control as a resource to give instructions with, and/or possibly equipment.
+	No Movement: Static layout, like Battlegrounds. Keeps scope in check, and still allows for depth.
+
+	Name/Art Theme? Little Wars
+	
+	
+	

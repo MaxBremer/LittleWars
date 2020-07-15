@@ -7,17 +7,17 @@ public class poisonData : Metadata
 
     public override void onAtk(int targetIndex)
     {
-        if (myEnemies[targetIndex].containing != null)
+        if (myEnemies[targetIndex].myUnit != null)
         {
-            myEnemies[targetIndex].containing.GetComponent<Unit>().setHealth(0);
+            myEnemies[targetIndex].myUnit.setHealth(0);
         }
     }
 
     public override void onHitBy(int attackerIndex)
     {
-        if (myEnemies[attackerIndex].containing != null)
+        if (myEnemies[attackerIndex].myUnit != null)
         {
-            myEnemies[attackerIndex].containing.GetComponent<Unit>().setHealth(0);
+            myEnemies[attackerIndex].myUnit.setHealth(0);
         }
     }
 }

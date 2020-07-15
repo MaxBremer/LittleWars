@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnButton : MonoBehaviour
 {
 
-    public Unit myUnit;
+    public bUnit myUnit;
 
     GameController controller;
 

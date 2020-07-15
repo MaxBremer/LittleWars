@@ -137,10 +137,10 @@ public class Unit : MonoBehaviour
 
     public void checkDeath()
     {
-        if(curHealth <= 0 && mySlot.containing == this.gameObject)
+        /*if(curHealth <= 0 && mySlot.containing == this.gameObject)
         {
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().emptySlot(mySlot);
-        }
+        }*/
     }
 
     public void refreshText()
@@ -258,4 +258,4 @@ public class Unit : MonoBehaviour
         }
     }
 }
-public enum AttackRule { random, leftToRight, leftMost, rightMost}
+

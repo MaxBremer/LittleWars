@@ -5,11 +5,14 @@ using UnityEngine;
 public class MarketSlot : MonoBehaviour
 {
     public int buyPrice;
-    public Unit storedUnit;
+    public bUnit storedUnit;
     public Material altMaterial;
     public Vector3 unitPlacement;
     public bool isInvSlot;
     Material defaultMaterial;
+
+    public UnitMesh myUnitMesh;
+    public GameObject myCostIcon;
 
     GameController gc;
 
@@ -26,6 +29,41 @@ public class MarketSlot : MonoBehaviour
     {
         mouseOverFunc();
     }*/
+
+    public void assignUnit(bUnit unit)
+    {
+        if (myUnitMesh == null)
+        {
+            myUnitMesh = transform.GetChild(0).GetComponent<UnitMesh>();
+            myUnitMesh.transform.localScale = new Vector3(.5f, .5f, .5f);
+        }
+        myUnitMesh.gameObject.SetActive(true);
+        
+        
+        storedUnit = unit;
+
+        myUnitMesh.myUnit = unit;
+        myUnitMesh.initUnitRenderComponents();
+        myUnitMesh.myMarketSlot = this;
+
+        if (!isInvSlot)
+        {
+            if (myCostIcon == null)
+            {
+                myCostIcon = transform.GetChild(1).gameObject;
+            }
+            myCostIcon.SetActive(true);
+            myCostIcon.transform.GetChild(0).GetComponent<TextMesh>().text = "" + unit.curBuyCost;
+        }
+        
+    }
+
+    public void emptyUnit()
+    {
+        storedUnit = null;
+        myUnitMesh.gameObject.SetActive(false);
+        myCostIcon.SetActive(false);
+    }
 
     void OnMouseOver()
     {
@@ -47,7 +85,7 @@ public class MarketSlot : MonoBehaviour
         {
             int theIndex = gc.mk.invSlots.IndexOf(this);
             gc.ih.removeFromInv(theIndex - gc.mk.removedBeforeMe(theIndex));
-            gc.mk.emptyMarketSlot(this);
+            gc.mk.refreshInventory();
         }
     }
 
@@ -71,10 +109,9 @@ public class MarketSlot : MonoBehaviour
         if (!isInvSlot && storedUnit != null && storedUnit.curBuyCost <= gc.ctrl && gc.ih.unitInventory.Count < InventoryHandler.maxInvSlots)
         {
             gc.ctrl -= storedUnit.curBuyCost;
-            //gc.ih.addToInv(storedUnit);
+            gc.ih.addToInv(storedUnit);
             gc.mk.addToInv(storedUnit);
-            
-            gc.ih.addToInv(gc.mk.invSlots[gc.mk.curInvCount-1].storedUnit);
+
             gc.mk.emptyMarketSlot(this);
         }
     }

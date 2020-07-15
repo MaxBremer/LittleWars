@@ -32,7 +32,7 @@ public class RefreshButton : MonoBehaviour
 
     void OnMouseDown()
     {
-        gc.mk.emptyStoredMarket();
+        //gc.mk.emptyStoredMarket();
         gc.mk.resetMarket();
         if (gc.st.isInfinite)
         {

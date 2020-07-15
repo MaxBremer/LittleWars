@@ -6,12 +6,12 @@ public class Metadata
 {
     public Slot[] myFriends;
     public Slot[] myEnemies;
-    public Unit me;
+    public bUnit me;
     public int myIndex;
 
     public Metadata() { }
 
-    public void passInData(Slot[] myFriendst, Slot[] myEnemiest, Unit met, int index)
+    public void passInData(Slot[] myFriendst, Slot[] myEnemiest, bUnit met, int index)
     {
         myFriends = myFriendst;
         myEnemies = myEnemiest;

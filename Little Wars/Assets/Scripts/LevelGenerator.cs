@@ -124,14 +124,14 @@ public class LevelGenerator : MonoBehaviour
     {
         float totDifficultyOfBoard = 0;
 
-        ret.enemyUnits = new Unit[numEnemies];
+        ret.enemyUnits = new bUnit[numEnemies];
         for (int i = 0; i < numEnemies; i++)
         {
             BaseUnit typeToDeploy = chooseEnemy();
-            GameObject tempUnitObj = Instantiate(gc.basicUnit, new Vector3(100, 100, 100), Quaternion.identity);
-            tempUnitObj.GetComponent<Unit>().assignType(typeToDeploy);
-            ret.enemyUnits[i] = tempUnitObj.GetComponent<Unit>();
-            totDifficultyOfBoard += ret.enemyUnits[i].unitType.difficultyFactor;
+            /*GameObject tempUnitObj = Instantiate(gc.basicUnit, new Vector3(100, 100, 100), Quaternion.identity);
+            tempUnitObj.GetComponent<Unit>().assignType(typeToDeploy);*/
+            ret.enemyUnits[i] = new bUnit(typeToDeploy);
+            totDifficultyOfBoard += ret.enemyUnits[i].myType.difficultyFactor;
         }
         return totDifficultyOfBoard;
     }

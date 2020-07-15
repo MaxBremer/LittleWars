@@ -36,12 +36,10 @@ public class ActiveUIController : MonoBehaviour
 
     public void moveOut()
     {
-        Debug.Log("adding");
         whereItShouldBe += new Vector3(230, 0, 0);
     }
     public void moveBack()
     {
-        Debug.Log("subtracting");
         whereItShouldBe -= new Vector3(230, 0, 0);
     }
 }

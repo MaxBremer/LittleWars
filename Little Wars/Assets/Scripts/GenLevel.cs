@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GenLevel
 {
-    public Unit[] enemyUnits;
+    public bUnit[] enemyUnits;
     public int enemySlotNum;
     public int friendlySlotNum;
 

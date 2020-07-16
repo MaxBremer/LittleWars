@@ -154,6 +154,7 @@ public class GameController : MonoBehaviour
             target.transform.GetChild(2).GetComponent<Image>().color = setTo;
             target.transform.GetChild(2).GetChild(0).GetComponent<Text>().color = setTo;
         }
+        
     }
 
 
@@ -164,6 +165,11 @@ public class GameController : MonoBehaviour
         {
             if (st.isInfinite)
             {
+                /*for(int i = 0; i < 100; i++)
+                {
+                    curLevel = lg.generateLevel(curDifficulty);
+                    mk.initMarketPhase(null);
+                }*/
                 curLevel = lg.generateLevel(curDifficulty);
                 loadGenLevel(curLevel, false);
             }
@@ -290,6 +296,7 @@ public class GameController : MonoBehaviour
                                     }
                                     else
                                     {
+                                        resetUnitsInLevel(curLevel);
                                         loadGenLevel(curLevel, true);
                                     }
                                 }
@@ -319,6 +326,14 @@ public class GameController : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    void resetUnitsInLevel(GenLevel level)
+    {
+        foreach(bUnit guy in level.enemyUnits)
+        {
+            guy.curHealth = guy.maxHealth;
         }
     }
 

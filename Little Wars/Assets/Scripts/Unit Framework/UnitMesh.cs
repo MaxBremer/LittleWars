@@ -78,15 +78,19 @@ public class UnitMesh : MonoBehaviour
                 myMarketSlot.rightMouseDownFunc();
             }
         }
-        if (Input.GetKeyDown(KeyCode.F) && myUnit.isFriendly && gc.ctrl >= 10 && myUnit.timesBuffed < 3)
+        if (Input.GetKeyDown(KeyCode.F) && myUnit.isFriendly && gc.ctrl >= 8 && myUnit.timesBuffed < 3)
         {
-            gc.ctrl -= 10;
+            gc.ctrl -= 8;
             GameObject myPopMan = Instantiate(popMan, gameObject.transform.position, Quaternion.identity);
             myUnit.curAtk++;
-            myUnit.curDef++;
+            
             myUnit.curHealth++;
             myUnit.maxHealth++;
             myUnit.timesBuffed++;
+            if(myUnit.timesBuffed == 3)
+            {
+                myUnit.curDef++;
+            }
             refreshText();
             StartCoroutine(makeThePop(myPopMan));
         }

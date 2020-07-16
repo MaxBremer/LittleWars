@@ -33,15 +33,18 @@ public class RefreshButton : MonoBehaviour
     void OnMouseDown()
     {
         //gc.mk.emptyStoredMarket();
-        gc.mk.resetMarket();
-        if (gc.st.isInfinite)
+        if (gc.ctrl >= 1)
         {
-            gc.mk.initMarketPhase(null);
+            gc.ctrl -= 1;
+            gc.mk.resetMarket();
+            if (gc.st.isInfinite)
+            {
+                gc.mk.initMarketPhase(null);
+            }
+            else
+            {
+                gc.mk.initMarketPhase(gc.levels[gc.levelCount]);
+            }
         }
-        else
-        {
-            gc.mk.initMarketPhase(gc.levels[gc.levelCount]);
-        }
-        
     }
 }

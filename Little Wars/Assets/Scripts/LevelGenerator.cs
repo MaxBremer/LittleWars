@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
@@ -8,6 +9,9 @@ public class LevelGenerator : MonoBehaviour
     public BaseUnit[] unitList;
     public int unitOptionsCount;
     public int[] unitOptionChances;
+
+    public BaseUnit[] SaiCounters;
+    public BaseUnit[] JennCounters;
 
     const bool genRandChances = false;
 
@@ -59,20 +63,7 @@ public class LevelGenerator : MonoBehaviour
         ret.enemySlotNum = numEnemies;
         ret.friendlySlotNum = numFriendlies;
 
-        //choose available units in market
-        //First, choose how many options there are.
-        int numAvailableInMarket = Random.Range(1, unitOptionsCount);
-        ret.availableInMarket = new BaseUnit[numAvailableInMarket];
-        //Then, choose what the options actually are.
-        List<BaseUnit> optionsRemaining = new List<BaseUnit>();
-        optionsRemaining.AddRange(unitList);
-        for(int i = 0; i < numAvailableInMarket; i++)
-        {
-            BaseUnit choice = optionsRemaining[Random.Range(0, optionsRemaining.Count)];
-            ret.availableInMarket[i] = choice;
-            optionsRemaining.Remove(choice);
-            difficulty += choice.difficultyFactor;
-        }
+        
 
         //Setup chances of different enemies
         //for now, its a simple and dumb system.
@@ -97,8 +88,23 @@ public class LevelGenerator : MonoBehaviour
         //NOTE: At this point, chances of various units should be set based on difficulty remaining
         difficulty -= chooseEnemiesForCount(ret, numEnemies);
 
-        //If the enemy has a Jenn, the market MUST contain at least one unit capable of damaging her, e.g. it cannot be a market full of Dans.
 
+
+        //choose available units in market
+        //First, choose how many options there are.
+        int numAvailableInMarket = Random.Range(2, unitOptionsCount);
+        //int numAvailableInMarket = 2;
+        ret.availableInMarket = new BaseUnit[numAvailableInMarket];
+        //Then, choose what the options actually are.
+        List<BaseUnit> optionsRemaining = new List<BaseUnit>();
+        optionsRemaining.AddRange(unitList);
+        for (int i = 0; i < numAvailableInMarket; i++)
+        {
+            BaseUnit choice = optionsRemaining[Random.Range(0, optionsRemaining.Count)];
+            ret.availableInMarket[i] = choice;
+            optionsRemaining.Remove(choice);
+            difficulty += choice.difficultyFactor;
+        }
         //Finally, choose the shop chance for each unit
         //Could be done in the above loop, but I like splitting them up for clarity.
         ret.marketUnitChances = new int[numAvailableInMarket];
@@ -109,11 +115,19 @@ public class LevelGenerator : MonoBehaviour
         }
 
         //choose number of shop slots
-        int numSlotsAvailable = Random.Range(2, 14);
+        int numSlotsAvailable = Random.Range(3, 14);
         difficulty += numSlotsAvailable * marketCountWeight;
         ret.numShopSlots = numSlotsAvailable;
 
-        
+        //If the enemy has a Jenn, the market MUST contain at least one unit capable of damaging her, e.g. it cannot be a market full of Dans.
+        if(hasType("Jenn", ret.enemyUnits))
+        {
+            marketMustContain(ret.availableInMarket, JennCounters);
+        }
+        //If the enemy has a Sai, the market MUST contain either a Sai, Val, or Mark.
+        if (hasType("Sai", ret.enemyUnits)){
+            marketMustContain(ret.availableInMarket, SaiCounters);
+        }
 
         //Finally, choose the starting ctrl at a value that attempts to offset remaining difficulty.
         if (difficulty < ctrlBoostOffset)
@@ -133,11 +147,34 @@ public class LevelGenerator : MonoBehaviour
             ret.startingCtrl = Mathf.CeilToInt((ctrlBoostOffset - difficulty)/ctrlWeight);
         }*/
 
-        Debug.Log("Post-generation, remaining difficulty was as follows.");
+        /*Debug.Log("Post-generation, remaining difficulty was as follows.");
         Debug.Log(difficulty);
-        Debug.Log("(hopefully should be close to zero)");
+        Debug.Log("(hopefully should be close to zero)");*/
+
+        /*Debug.Log("Units available:");
+        foreach(BaseUnit unit in ret.availableInMarket)
+        {
+            Debug.Log(unit.unitName);
+        }
+        Debug.Log("Odds:");
+        foreach(int x in ret.marketUnitChances)
+        {
+            Debug.Log("" + x);
+        }*/
 
         return ret;
+    }
+
+    bool hasType(string typeName, bUnit[] units)
+    {
+        foreach(bUnit unit in units)
+        {
+            if(unit.myName == typeName)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     float chooseEnemiesForCount(GenLevel ret, int numEnemies)
@@ -154,6 +191,20 @@ public class LevelGenerator : MonoBehaviour
             totDifficultyOfBoard += ret.enemyUnits[i].myType.difficultyFactor;
         }
         return totDifficultyOfBoard;
+    }
+
+    void marketMustContain(BaseUnit[] marketOpts, BaseUnit[] typesMustHave)
+    {
+        bool hasIt = false;
+        for(int i = 0; i < typesMustHave.Length; i++)
+        {
+            hasIt = hasIt || marketOpts.ToList<BaseUnit>().Contains(typesMustHave[i]);
+        }
+
+        if (!hasIt)
+        {
+            marketOpts[Random.Range(0, marketOpts.Length)] = typesMustHave[Random.Range(0,typesMustHave.Length)];
+        }
     }
 
     BaseUnit chooseEnemy()

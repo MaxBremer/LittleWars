@@ -8,7 +8,7 @@ public class MarketController : MonoBehaviour
     Transform marketInvStartPos;
 
     GameController gc;
-    InventoryHandler ih;
+    public InventoryHandler ih;
     GameObject unitSelectPanel;
 
     public GameObject marketSlot;
@@ -27,7 +27,7 @@ public class MarketController : MonoBehaviour
 
     public int curInvCount;
 
-    gStats sg;
+    public gStats sg;
 
     // Start is called before the first frame update
     void Start()
@@ -319,14 +319,20 @@ public class MarketController : MonoBehaviour
     {
         int choice = Random.Range(0, chancesTotal);
         int total = 0;
-        for (int i = 0; i < levelFrom.numShopSlots; i++)
+        bool chosenYet = false;
+        for (int i = 0; i < levelFrom.availableInMarket.Length; i++)
         {
             total += levelFrom.marketUnitChances[i];
             if (choice < total)
             {
                 sl.assignUnit(new bUnit(levelFrom.availableInMarket[i]));
+                chosenYet = true;
                 break;
             }
+        }
+        if (!chosenYet)
+        {
+            Debug.LogError("ERROR: Did not choose unit for slot");
         }
     }
 

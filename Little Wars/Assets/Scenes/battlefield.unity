@@ -7572,6 +7572,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd7f24c766c670644b83441fd21a65f2, type: 2}
   unitOptionsCount: 7
   unitOptionChances: 03000000070000000700000005000000020000000300000003000000
+  SaiCounters:
+  - {fileID: 11400000, guid: fa871f5e940c479488d2867af70b8f71, type: 2}
+  - {fileID: 11400000, guid: 29a0eb36405f46b48adb47fe97b3f390, type: 2}
+  - {fileID: 11400000, guid: cd7f24c766c670644b83441fd21a65f2, type: 2}
+  JennCounters:
+  - {fileID: 11400000, guid: cd7f24c766c670644b83441fd21a65f2, type: 2}
+  - {fileID: 11400000, guid: fa871f5e940c479488d2867af70b8f71, type: 2}
+  - {fileID: 11400000, guid: 59ff26b0119624649a5fd1deb3854652, type: 2}
 --- !u!1 &1300803597
 GameObject:
   m_ObjectHideFlags: 0
@@ -8950,6 +8958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674e59cced5bfc94c8a96cbb9c34ebc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ih: {fileID: 0}
   marketSlot: {fileID: 3809829958601396289, guid: 0943bc6a5b2a2b542ba8d35d51bdb827,
     type: 3}
   marketInvSlot: {fileID: 3809829958601396289, guid: da8543c0d721a7c48971239b6d7f6d07,
@@ -8957,6 +8966,7 @@ MonoBehaviour:
   unitObj: {fileID: 4906636401726768965, guid: 4b4b9830eb29b9f4b8c90d8cad164e71, type: 3}
   invSlots: []
   curInvCount: 0
+  sg: {fileID: 0}
 --- !u!4 &1971767049
 Transform:
   m_ObjectHideFlags: 0

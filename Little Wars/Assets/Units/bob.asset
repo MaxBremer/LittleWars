@@ -18,9 +18,9 @@ MonoBehaviour:
   health: 5
   attack: 3
   defense: 0
-  buyCost: 6
+  buyCost: 4
   deployCost: 0
-  mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  unitMat: {fileID: 2100000, guid: 49d7e0251ba5cea46bde04dd1f333ac1, type: 2}
+  mesh: {fileID: 5030161642366541214, guid: cfa3d0cea49528240a620cc193eb370e, type: 3}
+  unitMat: {fileID: 2100000, guid: c8dfbb59b2b6bf643a87072f155a01de, type: 2}
   menuImage: {fileID: 21300000, guid: 67158c9406cb5ac4db7fd29d8c57cafc, type: 3}
   myDataType: 1

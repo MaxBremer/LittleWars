@@ -13,6 +13,7 @@ ScriptsOnlyBuild:
     - MainMenuController
     - MarketController
     - MarketSlot
+    - OtherBackButton
     - PhaseSwapButton
     - RefreshButton
     - Slot
@@ -20,8 +21,11 @@ ScriptsOnlyBuild:
     - StartButton
     - TutorialPanel
     - Unit
+    - UnitMesh
     - gStats
     - menuController
+    - musicSlider
+    - optionsButton
     - tutNextButton
     - tutPrevButton
     Unity.Rider.Editor.dll:
@@ -43,6 +47,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/MainMenu.unity:
@@ -54,9 +59,17 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 21
       Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
     - Class: 28
       Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
     - Class: 48
+      Script: {instanceID: 0}
+    - Class: 65
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
@@ -69,31 +82,39 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11136}
+      Script: {instanceID: 13780}
     - Class: 114
-      Script: {instanceID: 11156}
+      Script: {instanceID: 13948}
     - Class: 114
-      Script: {instanceID: 11324}
+      Script: {instanceID: 13988}
     - Class: 114
-      Script: {instanceID: 11364}
+      Script: {instanceID: 14390}
     - Class: 114
-      Script: {instanceID: 11764}
+      Script: {instanceID: 14542}
     - Class: 114
-      Script: {instanceID: 11916}
+      Script: {instanceID: 14796}
     - Class: 114
-      Script: {instanceID: 12316}
+      Script: {instanceID: 14950}
     - Class: 114
-      Script: {instanceID: 12668}
+      Script: {instanceID: 14996}
     - Class: 114
-      Script: {instanceID: 12892}
+      Script: {instanceID: 15088}
     - Class: 114
-      Script: {instanceID: 12976}
+      Script: {instanceID: 15290}
     - Class: 114
-      Script: {instanceID: 13036}
+      Script: {instanceID: 15512}
     - Class: 114
-      Script: {instanceID: 14216}
+      Script: {instanceID: 15596}
     - Class: 114
-      Script: {instanceID: 74090}
+      Script: {instanceID: 15656}
+    - Class: 114
+      Script: {instanceID: 15686}
+    - Class: 114
+      Script: {instanceID: 116674}
+    - Class: 114
+      Script: {instanceID: 116682}
+    - Class: 114
+      Script: {instanceID: 116690}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -153,56 +174,56 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
-    - Class: 111
-      Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11136}
+      Script: {instanceID: 13776}
     - Class: 114
-      Script: {instanceID: 11152}
+      Script: {instanceID: 13780}
     - Class: 114
-      Script: {instanceID: 11156}
+      Script: {instanceID: 13832}
     - Class: 114
-      Script: {instanceID: 11246}
+      Script: {instanceID: 13870}
     - Class: 114
-      Script: {instanceID: 11324}
+      Script: {instanceID: 13948}
     - Class: 114
-      Script: {instanceID: 11364}
+      Script: {instanceID: 13988}
     - Class: 114
-      Script: {instanceID: 11644}
+      Script: {instanceID: 14266}
     - Class: 114
-      Script: {instanceID: 11724}
+      Script: {instanceID: 14294}
     - Class: 114
-      Script: {instanceID: 11764}
+      Script: {instanceID: 14348}
     - Class: 114
-      Script: {instanceID: 11992}
+      Script: {instanceID: 14386}
     - Class: 114
-      Script: {instanceID: 12154}
+      Script: {instanceID: 14390}
     - Class: 114
-      Script: {instanceID: 12174}
+      Script: {instanceID: 14402}
     - Class: 114
-      Script: {instanceID: 12378}
+      Script: {instanceID: 14618}
     - Class: 114
-      Script: {instanceID: 12484}
+      Script: {instanceID: 14782}
     - Class: 114
-      Script: {instanceID: 12668}
+      Script: {instanceID: 14796}
     - Class: 114
-      Script: {instanceID: 12692}
+      Script: {instanceID: 14804}
     - Class: 114
-      Script: {instanceID: 12718}
+      Script: {instanceID: 14810}
     - Class: 114
-      Script: {instanceID: 12806}
+      Script: {instanceID: 14846}
     - Class: 114
-      Script: {instanceID: 13036}
+      Script: {instanceID: 15006}
     - Class: 114
-      Script: {instanceID: 14874}
+      Script: {instanceID: 15110}
     - Class: 114
-      Script: {instanceID: 29654}
+      Script: {instanceID: 15290}
     - Class: 114
-      Script: {instanceID: 44252}
+      Script: {instanceID: 15314}
     - Class: 114
-      Script: {instanceID: 44264}
+      Script: {instanceID: 15340}
     - Class: 114
-      Script: {instanceID: 44270}
+      Script: {instanceID: 15428}
+    - Class: 114
+      Script: {instanceID: 15656}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -213,6 +234,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 196
       Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
+      Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
     - Class: 222
@@ -222,12 +247,6 @@ ScriptsOnlyBuild:
     - Class: 224
       Script: {instanceID: 0}
   scriptHashData:
-  - hash:
-      serializedVersion: 2
-      Hash: 5f1752ed2092162f016c19510c28a8b9
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Button
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -260,7 +279,13 @@ ScriptsOnlyBuild:
     className: TMP_Dropdown
   - hash:
       serializedVersion: 2
-      Hash: 7ce50551d04a7dcc13943df4096cb769
+      Hash: 3db62386f7757afcbc928289a04e00c8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RefreshButton
+  - hash:
+      serializedVersion: 2
+      Hash: 8fecaa4cb031d7a445b9a5882f2cce63
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameController
@@ -392,7 +417,7 @@ ScriptsOnlyBuild:
     className: AnimationPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: 00025ca06c9891fc689b6ab2f49669ba
+      Hash: 26544128f51b3773b0909a0ee99bb09b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Slot
@@ -404,16 +429,28 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
+      Hash: bc033667279bcb0165872b5a64c13a68
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: UnitMesh
+  - hash:
+      serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Shadow
   - hash:
       serializedVersion: 2
-      Hash: d4a0dac0706123b9549a2457f9126c31
+      Hash: 89f3b64206b7c2f41b5b361a1fe59184
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: InventoryHandler
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: tutPrevButton
   - hash:
       serializedVersion: 2
       Hash: cc4274b586df3c02688bac01b88bd16c
@@ -426,6 +463,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: ControlPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: tutNextButton
   - hash:
       serializedVersion: 2
       Hash: b8a5e8091ab0b8861d2add371082c5e0
@@ -500,10 +543,22 @@ ScriptsOnlyBuild:
     className: menuController
   - hash:
       serializedVersion: 2
+      Hash: 5f1752ed2092162f016c19510c28a8b9
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Button
+  - hash:
+      serializedVersion: 2
       Hash: bb174e81e7ecb89f02ba50cde802dc8e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ActiveUIController
+  - hash:
+      serializedVersion: 2
+      Hash: d08d027c192309eeda867cf3a88636cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LevelGenerator
   - hash:
       serializedVersion: 2
       Hash: f84d945e5e1ca985698660fc26e9657f
@@ -512,13 +567,19 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
+      Hash: a34c477498a29c69683b81729e83c392
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TutorialPanel
+  - hash:
+      serializedVersion: 2
       Hash: 5ad4aa237d47ac2bab17bacb672edf7a
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 4b220f8916dd074a632c10cce6a89033
+      Hash: 1cd09345b3fa3d3e7f2719d28d78c697
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: gStats
@@ -536,7 +597,13 @@ ScriptsOnlyBuild:
     className: SignalReceiver
   - hash:
       serializedVersion: 2
-      Hash: aeb1500ee2dfb68bc5a8986f59236bdf
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InfiniteButton
+  - hash:
+      serializedVersion: 2
+      Hash: c806e7191605915e715c03e27a304e1b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MarketSlot
@@ -572,13 +639,19 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MainMenuController
+  - hash:
+      serializedVersion: 2
       Hash: c1933cc0a2f4ff6eb13333347497beb3
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: 0fafd98db80ef582e329391eaa2dea7c
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SpawnButton
@@ -749,45 +822,21 @@ ScriptsOnlyBuild:
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: InfiniteButton
-  - hash:
-      serializedVersion: 2
-      Hash: d08d027c192309eeda867cf3a88636cc
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: LevelGenerator
-  - hash:
-      serializedVersion: 2
-      Hash: 3db62386f7757afcbc928289a04e00c8
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: RefreshButton
-  - hash:
-      serializedVersion: 2
-      Hash: a34c477498a29c69683b81729e83c392
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: TutorialPanel
+    className: musicSlider
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: tutNextButton
+    className: OtherBackButton
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: b99086363ea8ccad6413064bcfdbb0c7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: tutPrevButton
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: MainMenuController
+    className: optionsButton
   platform: 5
   scenePathNames:
   - Assets/Scenes/MainMenu.unity
   - Assets/Scenes/battlefield.unity
-  playerPath: C:/Users/wmaxo/Desktop/LW builds/.001/Little Wars.exe
+  playerPath: C:/Users/wmaxo/Desktop/LW builds/LittleWars.002/Little Wars.exe

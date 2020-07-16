@@ -84,11 +84,11 @@ public class InventoryHandler : MonoBehaviour
         {
             GameObject button = GameObject.Instantiate(spawnButton, buttonPos, Quaternion.identity);
             
-            button.transform.GetChild(0).GetComponent<Text>().text = unitInventory[i].myName;
+            button.transform.GetChild(0).GetComponent<Text>().text = unitInventory[i].myName + "\n" + unitInventory[i].curAtk + "," + unitInventory[i].curDef + "," + unitInventory[i].curHealth;
             button.transform.SetParent(parentTransform);
             button.GetComponent<SpawnButton>().myUnit = unitInventory[i];
             buttonList.Add(button);
-            buttonPos.y -= 40;
+            buttonPos.y -= 60;
         }
     }
     public void clearButtons()

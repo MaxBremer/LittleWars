@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Jenn
   m_EditorClassIdentifier: 
   unitName: Jenn
-  desc: mom
+  desc: blah
   difficultyFactor: 3
   health: 1
   attack: 4
   defense: 3
   buyCost: 3
   deployCost: 0
-  mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  mesh: {fileID: -2214812219669219890, guid: b8b626d75bc1a344bbcc71fe8f5a1d07, type: 3}
   unitMat: {fileID: 2100000, guid: 3d28f478e3b0f194fbafdba940647e9c, type: 2}
   menuImage: {fileID: 21300000, guid: 67158c9406cb5ac4db7fd29d8c57cafc, type: 3}
   myDataType: 0

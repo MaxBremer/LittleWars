@@ -172,7 +172,6 @@ public class MarketController : MonoBehaviour
             {
                 chooseInfUnitFor(tempSlot, gc.curLevel);
             }
-            Debug.Log("adding slot to slots list");
             marketSlots.Add(tempSlot);
 
             //MOVING STORAGE TO OCCUR ON END MARKET PHASE
@@ -274,15 +273,6 @@ public class MarketController : MonoBehaviour
         
     }
 
-    /*public void clearStored()
-    {
-        foreach(GameObject item in storedUnitObjs)
-        {
-            Destroy(item);
-        }
-        storedUnitObjs.Clear();
-    }*/
-
     public void resetMarket()
     {
         foreach (MarketSlot sl in marketSlots)
@@ -290,17 +280,8 @@ public class MarketController : MonoBehaviour
             //emptyMarketSlot(sl);
             Destroy(sl.gameObject);
         }
-        /*clearStored();
-        storedUnitObjs.Clear();*/
-        //foreach (MarketSlot sl in invSlots)
         for (int i = 0; i < Mathf.Min(invSlots.Count, InventoryHandler.maxInvSlots); i++)
         {
-            /*if (invSlots.Count > i && invSlots[i].storedUnit != null)
-            {
-                Destroy(invSlots[i].storedUnit.gameObject);
-                //storedUnitObjs.Add(invSlots[i].storedUnit.gameObject);
-                //ih.unitInventory[i] = storedUnitObjs[i].GetComponent<Unit>();
-            }*/
             
             Destroy(invSlots[i].gameObject);
         }
@@ -310,18 +291,12 @@ public class MarketController : MonoBehaviour
 
     public void addToInv(bUnit unit)
     {
-        /*GameObject tempUnitObj = Instantiate(unitObj, invSlots[curInvCount].transform.GetChild(0).transform.position, Quaternion.identity);
-        tempUnitObj.GetComponent<Unit>().copyIn(unit);*/
         invSlots[curInvCount].assignUnit(unit);
         curInvCount++;
     }
 
     public void emptyMarketSlot(MarketSlot sl)
     {
-        /*if (sl.storedUnit != null && sl.storedUnit.gameObject != null)
-        {
-            Destroy(sl.storedUnit.gameObject);
-        }*/
         sl.emptyUnit();
     }
 
@@ -334,12 +309,6 @@ public class MarketController : MonoBehaviour
             total += levelFrom.marketChances[i];
             if(choice < total)
             {
-                /*Vector3 pos = sl.transform.GetChild(0).transform.position;
-                //Debug.Log("unit placement is " + sl.unitPlacement.x + "," + sl.unitPlacement.y + "," + sl.unitPlacement.z);
-                sl.storedUnit = Instantiate(unitObj, pos, Quaternion.identity).GetComponent<Unit>();
-                sl.storedUnit.assignType(levelFrom.marketUnits[i]);
-                sl.storedUnit.myMarketSlot = sl;
-                sl.gameObject.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMesh>().text = "" + sl.storedUnit.curBuyCost;*/
                 sl.assignUnit(new bUnit(levelFrom.marketUnits[i]));
                 break;
             }
@@ -355,12 +324,6 @@ public class MarketController : MonoBehaviour
             total += levelFrom.marketUnitChances[i];
             if (choice < total)
             {
-                /*Vector3 pos = sl.transform.GetChild(0).transform.position;
-                //Debug.Log("unit placement is " + sl.unitPlacement.x + "," + sl.unitPlacement.y + "," + sl.unitPlacement.z);
-                sl.storedUnit = Instantiate(unitObj, pos, Quaternion.identity).GetComponent<Unit>();
-                sl.storedUnit.assignType(levelFrom.availableInMarket[i]);
-                sl.storedUnit.myMarketSlot = sl;
-                sl.gameObject.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMesh>().text = "" + sl.storedUnit.curBuyCost;*/
                 sl.assignUnit(new bUnit(levelFrom.availableInMarket[i]));
                 break;
             }

@@ -6,15 +6,20 @@ public class UnitMesh : MonoBehaviour
 {
     public MeshFilter mf;
     public MeshRenderer mr;
-    public MeshCollider mc;
+    //public MeshCollider mc;
+    public BoxCollider mc;
 
     public bUnit myUnit;
 
     public Slot mySlot;
     public MarketSlot myMarketSlot;
 
+    Quaternion initialTextRotation;
+    Vector3 initialTextPosition;
+    GameObject textObj;
     TextMesh myText;
     GameController gc;
+    GameObject popMan;
 
     // Start is called before the first frame update
     void Start()
@@ -22,12 +27,25 @@ public class UnitMesh : MonoBehaviour
         /*mf = GetComponent<MeshFilter>();
         mr = GetComponent<MeshRenderer>();
         mc = GetComponent<MeshCollider>();*/
+        textObj = transform.GetChild(0).gameObject;
+        initialTextRotation = textObj.transform.rotation;
+        initialTextPosition = textObj.transform.position;
+
+        popMan = GameObject.Find("pop");
+        gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    private void LateUpdate()
+    {
+        textObj.transform.rotation = initialTextRotation;
+        textObj.transform.position = initialTextPosition;
+        textObj.transform.localScale = new Vector3(1/transform.localScale.x, 1 / transform.localScale.y, 1 / transform.localScale.z);
     }
 
     private void OnMouseDown()
@@ -44,6 +62,10 @@ public class UnitMesh : MonoBehaviour
         {
             myMarketSlot.mouseOverFunc();
         }
+        /*if(mySlot != null)
+        {
+            gc.mouseOverSlotFunc(mySlot);
+        }*/
         showText();
     }
 
@@ -56,6 +78,26 @@ public class UnitMesh : MonoBehaviour
                 myMarketSlot.rightMouseDownFunc();
             }
         }
+        if (Input.GetKeyDown(KeyCode.F) && myUnit.isFriendly && gc.ctrl >= 10 && myUnit.timesBuffed < 3)
+        {
+            gc.ctrl -= 10;
+            GameObject myPopMan = Instantiate(popMan, gameObject.transform.position, Quaternion.identity);
+            myUnit.curAtk++;
+            myUnit.curDef++;
+            myUnit.curHealth++;
+            myUnit.maxHealth++;
+            myUnit.timesBuffed++;
+            refreshText();
+            StartCoroutine(makeThePop(myPopMan));
+        }
+    }
+
+    IEnumerator makeThePop(GameObject myPopMan)
+    {
+        myPopMan.GetComponent<ParticleSystem>().Play();
+        yield return new WaitForSeconds(1);
+        myPopMan.GetComponent<ParticleSystem>().Stop();
+        Destroy(myPopMan);
     }
 
     private void OnMouseExit()
@@ -89,9 +131,10 @@ public class UnitMesh : MonoBehaviour
         mr.sharedMaterial = myUnit.myMat;
         if (mc == null)
         {
-            mc = gameObject.AddComponent<MeshCollider>();
+            //mc = gameObject.AddComponent<MeshCollider>();
+            mc = gameObject.AddComponent<BoxCollider>();
         }
-        mc.sharedMesh = myUnit.myMesh;
+        //mc.sharedMesh = myUnit.myMesh;
 
         refreshText();
         hideText();
@@ -113,7 +156,7 @@ public class UnitMesh : MonoBehaviour
         {
             myText = gameObject.transform.GetChild(0).GetComponent<TextMesh>();
         }
-        myText.text = myUnit.curAtk + "," + myUnit.curDef + "," + myUnit.curHealth;
+        myText.text = myUnit.myName + "\n" + myUnit.curAtk + "," + myUnit.curDef + "," + myUnit.curHealth;
         
     }
 

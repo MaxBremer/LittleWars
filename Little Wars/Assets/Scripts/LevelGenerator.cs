@@ -9,6 +9,8 @@ public class LevelGenerator : MonoBehaviour
     public int unitOptionsCount;
     public int[] unitOptionChances;
 
+    const bool genRandChances = false;
+
     GameController gc;
 
     const float enemyCountWeight = 1.5f;
@@ -37,14 +39,22 @@ public class LevelGenerator : MonoBehaviour
         //float, while making things easier will ADD to the float.
         //I will make this better in the future I promise.
 
-        unitOptionChances = new int[unitOptionsCount];
+        
 
         GenLevel ret = new GenLevel();
 
         //Choose number of friendlies and enemies
         int numEnemies = Random.Range(2, 7);
         difficulty -= numEnemies * enemyCountWeight;
-        int numFriendlies = Random.Range(2, 7);
+        int numFriendlies;
+        if(numEnemies > 4)
+        {
+            numFriendlies = Random.Range(4, 7);
+        }
+        else
+        {
+            numFriendlies = Random.Range(2, 7);
+        }
         difficulty += numFriendlies * friendlyCountWeight;
         ret.enemySlotNum = numEnemies;
         ret.friendlySlotNum = numFriendlies;
@@ -63,13 +73,39 @@ public class LevelGenerator : MonoBehaviour
             optionsRemaining.Remove(choice);
             difficulty += choice.difficultyFactor;
         }
+
+        //Setup chances of different enemies
+        //for now, its a simple and dumb system.
+        if (genRandChances)
+        {
+            unitOptionChances = new int[unitOptionsCount];
+
+            for (int i = 0; i < unitOptionsCount; i++)
+            {
+                if (unitList[i].difficultyFactor * numEnemies > difficulty)
+                {
+                    unitOptionChances[i] = Random.Range(1, 4);
+                }
+                else
+                {
+                    unitOptionChances[i] = Random.Range(3, 8);
+                }
+            }
+        }
+
+        //Setup enemy board
+        //NOTE: At this point, chances of various units should be set based on difficulty remaining
+        difficulty -= chooseEnemiesForCount(ret, numEnemies);
+
+        //If the enemy has a Jenn, the market MUST contain at least one unit capable of damaging her, e.g. it cannot be a market full of Dans.
+
         //Finally, choose the shop chance for each unit
         //Could be done in the above loop, but I like splitting them up for clarity.
         ret.marketUnitChances = new int[numAvailableInMarket];
         for(int i = 0; i < numAvailableInMarket; i++)
         {
             //TODO: CHANGE.
-            ret.marketUnitChances[i] = 1;
+            ret.marketUnitChances[i] = (int)(10/ret.availableInMarket[i].difficultyFactor);
         }
 
         //choose number of shop slots
@@ -77,23 +113,7 @@ public class LevelGenerator : MonoBehaviour
         difficulty += numSlotsAvailable * marketCountWeight;
         ret.numShopSlots = numSlotsAvailable;
 
-        //Setup chances of different enemies
-        //for now, its a simple and dumb system.
-        for(int i = 0; i < unitOptionsCount; i++)
-        {
-            if(unitList[i].difficultyFactor * numEnemies > difficulty)
-            {
-                unitOptionChances[i] = Random.Range(1, 4);
-            }
-            else
-            {
-                unitOptionChances[i] = Random.Range(3, 8);
-            }
-        }
-
-        //Setup enemy board
-        //NOTE: At this point, chances of various units should be set based on difficulty remaining
-        difficulty -= chooseEnemiesForCount(ret, numEnemies);
+        
 
         //Finally, choose the starting ctrl at a value that attempts to offset remaining difficulty.
         if (difficulty < ctrlBoostOffset)
@@ -102,7 +122,7 @@ public class LevelGenerator : MonoBehaviour
         }
         else
         {
-            ret.startingCtrl = Random.Range(0, 8);
+            ret.startingCtrl = Random.Range(3, 10);
         }
         difficulty += ret.startingCtrl * ctrlWeight;
 

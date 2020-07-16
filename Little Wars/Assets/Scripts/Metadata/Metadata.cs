@@ -38,4 +38,9 @@ public class Metadata
     {
 
     }
+
+    public virtual void onEndFight()
+    {
+
+    }
 }

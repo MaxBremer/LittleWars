@@ -312,34 +312,57 @@ PrefabInstance:
     - target: {fileID: 4500682727060528544, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_Text
-      value: '
-
-'
+      value: asdf
       objectReference: {fileID: 0}
     - target: {fileID: 5001937706605092103, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5001937706605092103, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5001937706605092103, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -180
       objectReference: {fileID: 0}
     - target: {fileID: 5001937706605092103, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5001937706605092103, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001937706605092103, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001937706605092103, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001937706605092103, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.117479324
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001937706605092103, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.8711965
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001937706605092103, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.57999957
       objectReference: {fileID: 0}
     - target: {fileID: 7287745182781840524, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
@@ -359,22 +382,22 @@ PrefabInstance:
     - target: {fileID: 7287745182781840524, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7287745182781840524, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7287745182781840524, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7287745182781840524, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7287745182781840524, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
@@ -384,7 +407,7 @@ PrefabInstance:
     - target: {fileID: 7287745182781840524, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 7287745182781840524, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
@@ -394,7 +417,7 @@ PrefabInstance:
     - target: {fileID: 7287745182781840524, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 8815343278060226262, guid: 7f11dbb77afc027448b5c5b30c3f64e5,
         type: 3}

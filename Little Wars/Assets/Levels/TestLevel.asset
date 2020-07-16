@@ -27,5 +27,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fa871f5e940c479488d2867af70b8f71, type: 2}
   - {fileID: 11400000, guid: 59ff26b0119624649a5fd1deb3854652, type: 2}
   - {fileID: 11400000, guid: 27c90a7cb04c3a6428cb84f7b24c5350, type: 2}
-  marketChances: 050000000300000001000000
-  numMarketSlots: 4
+  - {fileID: 11400000, guid: 29a0eb36405f46b48adb47fe97b3f390, type: 2}
+  marketChances: 05000000030000000100000006000000
+  numMarketSlots: 6

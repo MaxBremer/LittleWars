@@ -96,6 +96,9 @@ public class GameController : MonoBehaviour
 
     const int startingCtrlBoost = 10;
 
+    GameObject arrow;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -118,6 +121,8 @@ public class GameController : MonoBehaviour
         ih = GameObject.Find("InventoryController").GetComponent<InventoryHandler>();
         
         mk = GameObject.Find("MarketController").GetComponent<MarketController>();
+
+        arrow = GameObject.FindGameObjectWithTag("indicator");
 
         lg = gameObject.GetComponent<LevelGenerator>();
 
@@ -230,6 +235,7 @@ public class GameController : MonoBehaviour
                             }
                             else
                             {
+                                triggerFightEnds();
                                 //fight is over, determine who won/tie.
                                 if (friendlyUnitCount > 0)
                                 {
@@ -313,6 +319,24 @@ public class GameController : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    void triggerFightEnds()
+    {
+        foreach(Slot sl in friendlyBoard)
+        {
+            if(sl.myUnit != null)
+            {
+                sl.myUnit.myData.onEndFight();
+            }
+        }
+        foreach (Slot sl in enemyBoard)
+        {
+            if (sl.myUnit != null)
+            {
+                sl.myUnit.myData.onEndFight();
+            }
         }
     }
 
@@ -445,7 +469,8 @@ public class GameController : MonoBehaviour
         for(int i = 0; i < Mathf.Min(level.enemyUnits.Length, level.enemySlotNum); i++)
         {
             spawnAtSlot(new bUnit(level.enemyUnits[i]), enemyBoard[i]);
-            enemyBoard[i].myUnitMesh.enemyAnimation();
+            /*enemyBoard[i].myUnitMesh.enemyAnimation();*/
+            enemyBoard[i].myUnitMesh.initAnimation();
             enemyUnitCount++;
             enemyBoard[i].myUnit.isFriendly = false;
         }
@@ -491,7 +516,8 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < Mathf.Min(level.enemyUnits.Length, level.enemySlotNum); i++)
         {
             spawnAtSlot(level.enemyUnits[i], enemyBoard[i]);
-            enemyBoard[i].myUnitMesh.enemyAnimation();
+            /*enemyBoard[i].myUnitMesh.enemyAnimation();*/
+            enemyBoard[i].myUnitMesh.initAnimation();
             enemyUnitCount++;
             enemyBoard[i].myUnit.isFriendly = false;
         }
@@ -564,6 +590,18 @@ public class GameController : MonoBehaviour
         sub2orig = sub2.GetComponent<MeshRenderer>().material;
         trueSub2 = sub2;
         sub2.GetComponent<MeshRenderer>().material = fightingMaterial;
+
+        float s1x = sub1.transform.position.x;
+        float s2x = sub2.transform.position.x;
+        float s1z = sub1.transform.position.z;
+        float s2z = sub2.transform.position.z;
+
+        float xDiff = Mathf.Abs(s1x - s2x);
+        float zDiff = Mathf.Abs(s1z - s2z);
+        float minX = Mathf.Min(s1x, s2x);
+        float minZ = Mathf.Min(s1z, s2z);
+        arrow.transform.position = new Vector3(minX + (xDiff/2), sub2.transform.position.y-.4f, minZ + (zDiff/2));
+        arrow.transform.LookAt(sub2.transform.position);
     }
 
     //I'd get rid of dumb redundancy but I'm scared.
@@ -610,42 +648,26 @@ public class GameController : MonoBehaviour
         
         if (playerTurn)
         {
-            UnitMesh contender = availableFriends[0];//.gameObject;// friendlyBoard[playerAtkInd].containing;
-            /*Unit[] options = new Unit[enemyUnitCount];
-            int optCount = 0;
-            for (int i = 0; i < enemyBoard.Length; i++)
-            {
-                if(enemyBoard[i].containing != null)
-                {
-                    options[optCount] = enemyBoard[i].containing.GetComponent<Unit>();
-                    optCount++;
-                }
-            }*/
+            UnitMesh contender = availableFriends[0];
             int choiceInd = availableFriends[0].myUnit.chooseTarget(unitMeshListToUnitList(availableEnemies));
             UnitMesh opponent = availableEnemies[choiceInd];//.gameObject;
             //TODO: UnitMesh gameobjects
             drawAttackBetween(contender.gameObject, opponent.gameObject);
+            contender.myUnit.myData.onStartFight();
+            opponent.myUnit.myData.onStartFight();
             //TODO: actual index iteration maybe?
             //playerAtkInd = (playerAtkInd + 1) % friendlyUnitCount;
 
         }
         else
         {
-            UnitMesh contender = availableEnemies[0];//.gameObject;// enemyBoard[enemyAtkInd].containing;
-            /*Unit[] options = new Unit[friendlyUnitCount];
-            int optCount = 0;
-            for (int i = 0; i < friendlyBoard.Length; i++)
-            {
-                if (friendlyBoard[i].containing != null)
-                {
-                    options[optCount] = friendlyBoard[i].containing.GetComponent<Unit>();
-                    optCount++;
-                }
-            }*/
+            UnitMesh contender = availableEnemies[0];
             int choiceInd = availableEnemies[0].myUnit.chooseTarget(unitMeshListToUnitList(availableFriends));
             UnitMesh opponent = availableFriends[choiceInd];//.gameObject;
             //TODO: SAME AS ABOVE
             drawAttackBetween(contender.gameObject, opponent.gameObject);
+            contender.myUnit.myData.onStartFight();
+            opponent.myUnit.myData.onStartFight();
             //enemyAtkInd = (enemyAtkInd + 1) % enemyUnitCount;
         }
         curAttackersHighlighted = true;
@@ -674,23 +696,30 @@ public class GameController : MonoBehaviour
         sub2unit.atkDamage(sub1unit.curAtk);
         sub2unit.myData.onHitBy(sub1unit.myData.myIndex);
 
+        
+
         if (sub1unit.isDead())
         {
-            emptySlot(trueSub1.GetComponent<UnitMesh>().mySlot);
+            sub1unit.myData.onDeath();
+            //emptySlot(trueSub1.GetComponent<UnitMesh>().mySlot);
         }
-        else
+        if(sub2unit.isDead())
         {
-            trueSub1.GetComponent<UnitMesh>().refreshText();
+            sub2unit.myData.onDeath();
+            /*trueSub1.GetComponent<UnitMesh>().refreshText();*/
         }
+
+        trueSub1.GetComponent<UnitMesh>().refreshText();
+        trueSub2.GetComponent<UnitMesh>().refreshText();
 
 
         if (sub2unit.isDead())
         {
             emptySlot(trueSub2.GetComponent<UnitMesh>().mySlot);
         }
-        else
+        if(sub1unit.isDead())
         {
-            trueSub2.GetComponent<UnitMesh>().refreshText();
+            emptySlot(trueSub1.GetComponent<UnitMesh>().mySlot);
         }
         
         restoreMats(trueSub1, trueSub2);
@@ -698,6 +727,8 @@ public class GameController : MonoBehaviour
         playerTurn = !playerTurn;
         curAttackersHighlighted = false;
         refreshMetaData();
+
+        arrow.transform.position = new Vector3(100, 100, 100);
     }
 
     void setupAvailables()

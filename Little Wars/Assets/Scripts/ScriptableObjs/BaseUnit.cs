@@ -25,4 +25,4 @@ public class BaseUnit : ScriptableObject
 }
 
 //IF NEW METADATA, ADD TO THIS ENUM
-public enum dataType { basic, swipe, poison }
+public enum dataType { basic, swipe, poison, immune, dodge }

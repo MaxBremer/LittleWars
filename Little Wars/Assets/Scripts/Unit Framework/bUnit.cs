@@ -17,23 +17,27 @@ public class bUnit
     public Material myMat;
 
     public int curHealth;
+    public int maxHealth;
     public int curAtk;
     public int curDef;
 
     public int curBuyCost;
     public int curDeployCost;
 
-    public AnimationClip idleAnim;
+    public int timesBuffed;
 
     public bUnit() { }
     public bUnit(BaseUnit unitType)
     {
+        timesBuffed = 0;
+
         myType = unitType;
 
         myName = unitType.unitName;
         myRule = AttackRule.random;
 
         curHealth = unitType.health;
+        maxHealth = curHealth;
         curAtk = unitType.attack;
         curDef = unitType.defense;
 
@@ -55,6 +59,12 @@ public class bUnit
                 break;
             case dataType.swipe:
                 myData = new bobData();
+                break;
+            case dataType.immune:
+                myData = new poisonHealData();
+                break;
+            case dataType.dodge:
+                myData = new dodgeData();
                 break;
             default:
                 Debug.Log("ERROR: unrecognized datatype from BaseUnit");

@@ -38,7 +38,7 @@ public class MarketController : MonoBehaviour
         marketSlots = new List<MarketSlot>();
         storedMarketUnits = new List<bUnit>();
         invSlots = new List<MarketSlot>();
-        //storedUnitObjs = new List<GameObject>();
+
         marketStartPos = GameObject.Find("MarketStartLoc").transform;
         marketInvStartPos = GameObject.Find("MarketInvStartLoc").transform;
         
@@ -50,9 +50,6 @@ public class MarketController : MonoBehaviour
         {
             ih = gc.ih;
         }
-        //unitSelectPanel.SetActive(false);
-        //gc.curPhase = GamePhase.Market;
-        //clearStored();
 
         chancesTotal = 0;
         if (sg.isInfinite)
@@ -106,27 +103,13 @@ public class MarketController : MonoBehaviour
         }
         invSlots.Clear();
 
-        //TODO: Clean this shit up. It's gross af.
         for (int i = 0; i < InventoryHandler.maxInvSlots; i++)
         {
             MarketSlot invSlot = Instantiate(marketInvSlot, invPos, Quaternion.identity).GetComponent<MarketSlot>();
             invSlot.isInvSlot = true;
-            /*if(i < storedUnitObjs.Count)
-            {
-                if (i > fullCount-1)
-                {
-                    Destroy(storedUnitObjs[i]);
-                }
-                else
-                {
-                    invSlot.storedUnit = storedUnitObjs[i].GetComponent<Unit>();
-                }
-            }else */
             if (i < fullCount)
             {
-                invSlot.assignUnit(ih.unitInventory[i]);/*Instantiate(unitObj, invSlot.transform.GetChild(0).transform.position, Quaternion.identity).GetComponent<Unit>();
-                invSlot.storedUnit.copyIn(ih.unitInventory[i]);
-                invSlot.storedUnit.myMarketSlot = invSlot;*/
+                invSlot.assignUnit(ih.unitInventory[i]);
             }
             invSlots.Add(invSlot);
 
@@ -174,12 +157,6 @@ public class MarketController : MonoBehaviour
             }
             marketSlots.Add(tempSlot);
 
-            //MOVING STORAGE TO OCCUR ON END MARKET PHASE
-            /*MarketSlot forStorage = Instantiate(tempSlot.gameObject, new Vector3(100, 100, 100), Quaternion.identity).GetComponent<MarketSlot>();
-            forStorage.storedUnit = Instantiate(tempSlot.storedUnit.gameObject, new Vector3(100, 100, 100), Quaternion.identity).GetComponent<Unit>();
-            forStorage.storedUnit.myMarketSlot = forStorage;
-            storedMarketSlots.Add(forStorage);*/
-
             if (((i + 1) % rowCount) != 0)
             {
                 slotPos.x -= itemWidth;
@@ -194,14 +171,6 @@ public class MarketController : MonoBehaviour
 
     public void emptyStoredMarket()
     {
-        /*foreach (MarketSlot mk in storedMarketSlots)
-        {
-            *//*if(mk.storedUnit != null)
-            {
-                Destroy(mk.storedUnit.gameObject);
-            }*//*
-            Destroy(mk.gameObject);
-        }*/
         storedMarketUnits.Clear();
     }
 
@@ -209,14 +178,12 @@ public class MarketController : MonoBehaviour
     {
         Vector3 slotPos = marketStartPos.position;
         float origX = slotPos.x;
-        //foreach (MarketSlot mk in storedMarketSlots)
         for(int i = 0; i < storedMarketUnits.Count; i++)
         {
             MarketSlot tempSl = Instantiate(marketSlot, slotPos, Quaternion.identity).GetComponent<MarketSlot>();
             if (storedMarketUnits[i] != null)
             {
-                tempSl.assignUnit(storedMarketUnits[i]);/*Instantiate(storedMarketSlots[i].storedUnit.gameObject, tempSl.transform.GetChild(0).transform.position, Quaternion.identity).GetComponent<Unit>();
-                tempSl.storedUnit.myMarketSlot = tempSl;*/
+                tempSl.assignUnit(storedMarketUnits[i]);
             }
             else
             {
@@ -237,27 +204,6 @@ public class MarketController : MonoBehaviour
             }
         }
         emptyStoredMarket();
-    }
-
-    void storeMarket()
-    {
-        //MIGHT NOT NEED THIS
-        storedMarketUnits.Clear();
-        for(int i = 0; i < marketSlots.Count; i++)
-        {
-            //MarketSlot tempSlot = marketSlots[i];
-            //MarketSlot forStorage = Instantiate(tempSlot.gameObject, new Vector3(100, 100, 100), Quaternion.identity).GetComponent<MarketSlot>();
-            /*if (tempSlot.storedUnit != null)
-            {
-                forStorage.storedUnit = Instantiate(tempSlot.storedUnit.gameObject, new Vector3(100, 100, 100), Quaternion.identity).GetComponent<Unit>();
-                forStorage.storedUnit.myMarketSlot = forStorage;
-            }*/
-            storedMarketUnits.Add(marketSlots[i].storedUnit);
-            if (marketSlots[i].storedUnit == null)
-            {
-                Debug.Log("storing null");
-            }
-        }
     }
 
     public void endMarketPhase()
@@ -336,9 +282,4 @@ public class MarketController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

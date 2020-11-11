@@ -165,11 +165,6 @@ public class GameController : MonoBehaviour
         {
             if (st.isInfinite)
             {
-                /*for(int i = 0; i < 100; i++)
-                {
-                    curLevel = lg.generateLevel(curDifficulty);
-                    mk.initMarketPhase(null);
-                }*/
                 curLevel = lg.generateLevel(curDifficulty);
                 loadGenLevel(curLevel, false);
             }
@@ -189,26 +184,9 @@ public class GameController : MonoBehaviour
             case GamePhase.Prep:
                 if (Input.GetKeyDown(marketKey))
                 {
-                    /*if (firstMarket)
-                    {
-                        unitSelectPanel.SetActive(false);
-                        curPhase = GamePhase.Market;
-                        *//*if (!st.isInfinite)
-                        {
-                            mk.initMarketPhase(levels[levelCount]);
-                        }
-                        else
-                        {
-                            mk.initMarketPhase(null);
-                        }
-                        firstMarket = false;*//*
-                    }
-                    else
-                    {*/
                         unitSelectPanel.SetActive(false);
                         curPhase = GamePhase.Market;
                         mk.refreshInventory();
-                    //}
                 }
                 if (Mathf.CeilToInt(Camera.main.transform.eulerAngles.y) != 0)
                 {
@@ -368,10 +346,6 @@ public class GameController : MonoBehaviour
             sl.gameObject.GetComponent<MeshRenderer>().material = selectMaterial;
             selected = sl.gameObject;
         }
-        /*if(curPhase == GamePhase.Prep)
-        {
-            sl.transform.GetChild(0).GetComponent<UnitMesh>().initAnimation();
-        }*/
     }
 
     public void mouseExitSlotFunc(Slot sl)
@@ -385,14 +359,6 @@ public class GameController : MonoBehaviour
 
     public void leftMouseSlotFunc(Slot sl)
     {
-        /*if(sl.containing == null)
-        {
-            Debug.Log("slot available");
-        }
-        if(typeToAssign != null)
-        {
-            Debug.Log("have a boy to place");
-        }*/
         if (sl.gameObject.tag == "FriendSlot" && curPhase == GamePhase.Prep && sl.myUnit == null && typeToAssign != null)
         {
             spawnAtSlot(typeToAssign, sl);
@@ -409,8 +375,6 @@ public class GameController : MonoBehaviour
     {
         if(sl.gameObject.tag == "FriendSlot" && curPhase == GamePhase.Prep && sl.myUnit != null)
         {
-            /*Unit temp = Instantiate(basicUnit, new Vector3(100,100,100), Quaternion.identity).GetComponent<Unit>();
-            temp.copyIn(sl.containing.GetComponent<Unit>());*/
             ih.addToInv(sl.myUnit);
             refreshUnitButtons();
             emptySlot(sl);
@@ -429,14 +393,9 @@ public class GameController : MonoBehaviour
         {
             if (sl.myUnit != null)
             {
-                //Unit temp = Instantiate(basicUnit, new Vector3(100, 100, 100), Quaternion.identity).GetComponent<Unit>();
-                //temp.copyIn(sl.containing.GetComponent<Unit>());
                 ih.addToInv(sl.myUnit);
-                //Destroy(sl.containing.gameObject);
                 friendlyUnitCount--;
             }
-            //refreshUnitButtons();
-            //emptySlot(sl);
             Destroy(sl.gameObject);
         }
         foreach (Slot s in enemyBoard)
@@ -445,7 +404,6 @@ public class GameController : MonoBehaviour
             Destroy(s.gameObject);
         }
         mk.resetMarket();
-        //mk.clearStored();
         ih.clearButtons();
     }
 
@@ -457,7 +415,7 @@ public class GameController : MonoBehaviour
         unitSelectPanel = GameObject.Find("UnitSelectPanel");
 
         //Slot instantiation
-        Vector3 curSlotPos = countToPos[level.friendlySlotNum];// - new Vector3((countToOffset[level.friendlySlotNum]/2),0,0);
+        Vector3 curSlotPos = countToPos[level.friendlySlotNum];
         float slotOffset = countToOffset[level.friendlySlotNum];
         for (int i = 0; i < level.friendlySlotNum ; i++)
         {
@@ -465,7 +423,6 @@ public class GameController : MonoBehaviour
             tempSlotObj.transform.Rotate(new Vector3(270, 0, 0));
             friendlyBoard[i] = tempSlotObj.GetComponent<Slot>();
             tempSlotObj.GetComponent<Slot>().slotIndex = i;
-            //tempSlotObj.transform.GetChild(0).GetComponent<UnitMesh>().initAnimation();
             curSlotPos.x += slotOffset;
         }
         curSlotPos = countToPos[level.enemySlotNum] + new Vector3(0,.5f,5);
@@ -476,7 +433,6 @@ public class GameController : MonoBehaviour
             tempSlotObj.transform.Rotate(new Vector3(270, 0, 0));
             enemyBoard[i] = tempSlotObj.GetComponent<Slot>();
             tempSlotObj.GetComponent<Slot>().slotIndex = i;
-            //tempSlotObj.transform.GetChild(0).GetComponent<UnitMesh>().initAnimation();
             curSlotPos.x += slotOffset;
         }
 
@@ -484,7 +440,6 @@ public class GameController : MonoBehaviour
         for(int i = 0; i < Mathf.Min(level.enemyUnits.Length, level.enemySlotNum); i++)
         {
             spawnAtSlot(new bUnit(level.enemyUnits[i]), enemyBoard[i]);
-            /*enemyBoard[i].myUnitMesh.enemyAnimation();*/
             enemyBoard[i].myUnitMesh.initAnimation();
             enemyUnitCount++;
             enemyBoard[i].myUnit.isFriendly = false;
@@ -506,7 +461,7 @@ public class GameController : MonoBehaviour
 
         unitSelectPanel = GameObject.Find("UnitSelectPanel");
 
-        Vector3 curSlotPos = countToPos[level.friendlySlotNum];// - new Vector3((countToOffset[level.friendlySlotNum]/2),0,0);
+        Vector3 curSlotPos = countToPos[level.friendlySlotNum];
         float slotOffset = countToOffset[level.friendlySlotNum];
         for (int i = 0; i < level.friendlySlotNum; i++)
         {
@@ -619,7 +574,6 @@ public class GameController : MonoBehaviour
         arrow.transform.LookAt(sub2.transform.position);
     }
 
-    //I'd get rid of dumb redundancy but I'm scared.
     public void restoreMats(GameObject sub1, GameObject sub2)
     {
         sub1.GetComponent<MeshRenderer>().material = sub1orig;
@@ -665,13 +619,12 @@ public class GameController : MonoBehaviour
         {
             UnitMesh contender = availableFriends[0];
             int choiceInd = availableFriends[0].myUnit.chooseTarget(unitMeshListToUnitList(availableEnemies));
-            UnitMesh opponent = availableEnemies[choiceInd];//.gameObject;
+            UnitMesh opponent = availableEnemies[choiceInd];
             //TODO: UnitMesh gameobjects
             drawAttackBetween(contender.gameObject, opponent.gameObject);
             contender.myUnit.myData.onStartFight();
             opponent.myUnit.myData.onStartFight();
             //TODO: actual index iteration maybe?
-            //playerAtkInd = (playerAtkInd + 1) % friendlyUnitCount;
 
         }
         else
@@ -716,12 +669,10 @@ public class GameController : MonoBehaviour
         if (sub1unit.isDead())
         {
             sub1unit.myData.onDeath();
-            //emptySlot(trueSub1.GetComponent<UnitMesh>().mySlot);
         }
         if(sub2unit.isDead())
         {
             sub2unit.myData.onDeath();
-            /*trueSub1.GetComponent<UnitMesh>().refreshText();*/
         }
 
         trueSub1.GetComponent<UnitMesh>().refreshText();
